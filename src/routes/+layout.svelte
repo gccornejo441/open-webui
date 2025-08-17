@@ -49,6 +49,7 @@
 
 	import { beforeNavigate } from '$app/navigation';
 	import { updated } from '$app/state';
+	import CuiBanner from '$lib/components/common/CuiBanner.svelte';
 
 	// handle frontend updates (https://svelte.dev/docs/kit/configuration#version)
 	beforeNavigate(({ willUnload, to }) => {

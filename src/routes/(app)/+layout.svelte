@@ -48,6 +48,7 @@
 	import AccountPending from '$lib/components/layout/Overlay/AccountPending.svelte';
 	import UpdateInfoToast from '$lib/components/layout/UpdateInfoToast.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
+	import CuiBanner from '$lib/components/common/CuiBanner.svelte';
 
 	const i18n = getContext('i18n');
 

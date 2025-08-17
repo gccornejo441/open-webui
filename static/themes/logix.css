@@ -1,0 +1,95 @@
+/* ----------  PALETTE & GLOBAL VARS  ---------- */
+:root {
+  --black: #000000;
+  --white: #ffffff;
+
+  /* Military green scale */
+  --military-light-bg: #dce2cf;   /* light desaturated olive */
+  --military-light-border: #5b5f3c; /* deep olive border */
+  --military-light-text: #3e4229;   /* dark olive text */
+
+  --military-dark-bg: #1b1f12;   /* near-black olive */
+  --military-dark-border: #3a3f25; /* muted olive border */
+  --military-dark-text: #aab78a;   /* pale green text */
+
+  /* Logo */
+  --marine-logo-url: url("../USMC-Logo.svg");
+
+  /* NEW: height of your fixed top banner (used to offset sidebar & scrim) */
+  --banner-h: 1.5rem;
+}
+
+/* ----------  SIDEBAR THEMING  ---------- */
+#sidebar {
+  --sidebar-bg-color: var(--military-light-bg);
+  --sidebar-border-color: var(--military-light-border);
+  --sidebar-text-color: var(--military-light-text);
+
+  background-color: var(--sidebar-bg-color);
+  border-right: 1px solid var(--sidebar-border-color);
+  color: var(--sidebar-text-color);
+}
+
+/* Dark mode */
+.dark #sidebar {
+  --sidebar-bg-color: var(--military-dark-bg);
+  --sidebar-border-color: var(--military-dark-border);
+  --sidebar-text-color: var(--military-dark-text);
+}
+
+/* Apply text / stroke color to everything inside the sidebar */
+#sidebar * {
+  color: var(--sidebar-text-color) !important;
+  stroke: var(--sidebar-text-color) !important;
+}
+
+/* ----------  SEARCH INPUTS  ---------- */
+#sidebar input[type="search"],
+#sidebar input.search-input {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--sidebar-border-color);
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 0.875rem;
+}
+#sidebar input[type="search"]::placeholder,
+#sidebar input.search-input::placeholder {
+  color: var(--sidebar-text-color);
+  opacity: 0.6;
+}
+
+/* Dark mode search inputs */
+.dark #sidebar input[type="search"],
+.dark #sidebar input.search-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--sidebar-border-color);
+}
+.dark #sidebar input[type="search"]::placeholder,
+.dark #sidebar input.search-input::placeholder {
+  color: var(--sidebar-text-color);
+  opacity: 0.6;
+}
+
+/* ----------  HOVER BEHAVIOR  ---------- */
+/* On hover: brighter text (bg handled by Tailwind-neutralizer below) */
+#sidebar a:hover *,
+#sidebar button:hover *,
+#sidebar [role="button"]:hover * {
+  color: var(--white) !important;
+  stroke: var(--white) !important;
+}
+
+/* Neutralize Tailwind hover:bg-* utilities inside the sidebar */
+#sidebar .hover\:bg-gray-100:hover,
+#sidebar .dark\:hover\:bg-gray-900:hover,
+.dark #sidebar .dark\:hover\:bg-gray-900:hover {
+  background-color: var(--sidebar-border-color) !important;
+}
+
+/* Make any .sidebar header match the sidebar theme */
+#sidebar .sidebar,
+.sidebar {
+  background-color: var(--sidebar-bg-color) !important;
+  color: var(--sidebar-text-color) !important;
+}
