@@ -65,13 +65,13 @@
 	const WELCOME_YOUTUBE = 'https://youtu.be/xYuH8Ysc0DM?si=OH_g1d5OJ_Ljd1K6';
 
 	function showWelcomeVideo() {
-		const adminDefault = $settings?.showWelcomeVideo === true; // default OFF unless enabled
+		const adminDefault = $settings?.showWelcomeVideo === true;
 		const alreadySeen = localStorage.getItem(WELCOME_VIDEO_SEEN_KEY) === '1';
 		const isAdmin = $user?.role === 'admin';
 
 		if (adminDefault && !alreadySeen && !isAdmin) {
 			showWelcomeVideoModal = true;
-			localStorage.setItem(WELCOME_VIDEO_SEEN_KEY, '1'); // mark immediately
+			localStorage.setItem(WELCOME_VIDEO_SEEN_KEY, '1');
 		}
 	}
 	onMount(async () => {
