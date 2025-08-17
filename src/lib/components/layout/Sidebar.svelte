@@ -734,91 +734,113 @@
 			</div>
 
 			<div class="pb-1.5">
-				<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
-					<a
-						id="sidebar-new-chat-button"
-						class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
-						href="/"
-						draggable="false"
-						on:click={newChatHandler}
-					>
-						<div class="self-center">
-							<PencilSquare className=" size-4.5" strokeWidth="2" />
-						</div>
-
-						<div class="flex self-center translate-y-[0.5px]">
-							<div class=" self-center text-sm font-primary">{$i18n.t('New Chat')}</div>
-						</div>
-					</a>
-				</div>
-
-				<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
-					<button
-						class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
-						on:click={() => {
-							showSearch.set(true);
-						}}
-						draggable="false"
-					>
-						<div class="self-center">
-							<Search strokeWidth="2" className="size-4.5" />
-						</div>
-
-						<div class="flex self-center translate-y-[0.5px]">
-							<div class=" self-center text-sm font-primary">{$i18n.t('Search')}</div>
-						</div>
-					</button>
-				</div>
-
-				{#if ($config?.features?.enable_notes ?? false) && ($user?.role === 'admin' || ($user?.permissions?.features?.notes ?? true))}
+				<Tooltip placement="right" content={$i18n.t('Start a new chat')} className="w-full">
 					<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
 						<a
-							class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-							href="/notes"
-							on:click={itemClickHandler}
+							id="sidebar-new-chat-button"
+							class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
+							href="/"
 							draggable="false"
+							on:click={newChatHandler}
 						>
 							<div class="self-center">
-								<Note className="size-4.5" strokeWidth="2" />
+								<PencilSquare className=" size-4.5" strokeWidth="2" />
 							</div>
 
 							<div class="flex self-center translate-y-[0.5px]">
-								<div class=" self-center text-sm font-primary">{$i18n.t('Notes')}</div>
+								<div class=" self-center text-sm font-primary">{$i18n.t('New Chat')}</div>
 							</div>
 						</a>
 					</div>
+				</Tooltip>
+
+				<Tooltip
+					placement="right"
+					content={$i18n.t('Find chats, notes, tags, models, and workspace tools')}
+					className="w-full"
+				>
+					<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
+						<button
+							class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
+							on:click={() => {
+								showSearch.set(true);
+							}}
+							draggable="false"
+						>
+							<div class="self-center">
+								<Search strokeWidth="2" className="size-4.5" />
+							</div>
+
+							<div class="flex self-center translate-y-[0.5px]">
+								<div class=" self-center text-sm font-primary">{$i18n.t('Search')}</div>
+							</div>
+						</button>
+					</div>
+				</Tooltip>
+
+				{#if ($config?.features?.enable_notes ?? false) && ($user?.role === 'admin' || ($user?.permissions?.features?.notes ?? true))}
+					<Tooltip
+						content={$i18n.t('View, create, and organize personal or shared notes')}
+						placement="right"
+						className="w-full"
+					>
+						<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
+							<a
+								class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+								href="/notes"
+								on:click={itemClickHandler}
+								draggable="false"
+							>
+								<div class="self-center">
+									<Note className="size-4.5" strokeWidth="2" />
+								</div>
+
+								<div class="flex self-center translate-y-[0.5px]">
+									<div class=" self-center text-sm font-primary">{$i18n.t('Notes')}</div>
+								</div>
+							</a>
+						</div>
+					</Tooltip>
 				{/if}
 
 				{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools}
-					<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
-						<a
-							class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-							href="/workspace"
-							on:click={itemClickHandler}
-							draggable="false"
-						>
-							<div class="self-center">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="2"
-									stroke="currentColor"
-									class="size-4.5"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
-									/>
-								</svg>
-							</div>
+					<Tooltip
+						content={$i18n.t(
+							'Access and manage models, prompts, knowledge, and tools in your workspace'
+						)}
+						placement="right"
+						className="w-full"
+					>
+						<div class="px-[7px] flex justify-center text-gray-800 dark:text-gray-200">
+							<a
+								class="grow flex items-center space-x-3 rounded-lg px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+								href="/workspace"
+								on:click={itemClickHandler}
+								draggable="false"
+							>
+								<div class="self-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="2"
+										stroke="currentColor"
+										class="size-4.5"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
+										/>
+									</svg>
+								</div>
 
-							<div class="flex self-center translate-y-[0.5px]">
-								<div class=" self-center text-sm font-primary">{$i18n.t('Workspace')}</div>
-							</div>
-						</a>
-					</div>
+								<div class="flex self-center translate-y-[0.5px]">
+									<div class=" self-center text-sm font-primary">{$i18n.t('Workspace')}</div>
+								</div>
+							</a>
+						</div>
+					</Tooltip>
 				{/if}
 			</div>
 
@@ -1123,20 +1145,28 @@
 							}}
 						>
 							<div
-								class=" flex items-center rounded-xl py-2 px-1.5 w-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+								class="flex items-center rounded-xl py-2 px-1.5 w-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
 							>
-								<div class=" self-center mr-3">
+								<div class="self-center mr-3">
 									<img
 										src={$user?.profile_image_url}
-										class=" size-6 object-cover rounded-full"
+										class="size-6 object-cover rounded-full"
 										alt={$i18n.t('Open User Profile Menu')}
 										aria-label={$i18n.t('Open User Profile Menu')}
 									/>
 								</div>
-								<div class=" self-center font-medium">{$user?.name}</div>
+								<div class="self-center font-medium">{$user?.name}</div>
 							</div>
 						</UserMenu>
 					{/if}
+				</div>
+
+				<!-- Branding footer -->
+				<div
+					class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-gray-500 dark:text-gray-400 font-primary"
+				>
+					<span class="block font-bold tracking-wide text-lg">LOGIX</span>
+					<span class="block font-semibold tracking-wide"></span>
 				</div>
 			</div>
 		</div>
