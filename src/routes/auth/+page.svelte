@@ -19,6 +19,7 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import OnBoarding from '$lib/components/OnBoarding.svelte';
 	import SensitiveInput from '$lib/components/common/SensitiveInput.svelte';
+	import CuiOverlay from '$lib/components/CuiOverlay.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -30,6 +31,7 @@
 	let email = '';
 	let password = '';
 	let confirmPassword = '';
+	let showCuiOverlay = true;
 
 	let ldapUsername = '';
 
@@ -128,6 +130,10 @@
 
 	let onboarding = false;
 
+	const getStartedHandler = () => {
+		showCuiOverlay = false;
+	};
+
 	async function setLogoImage() {
 		await tick();
 		const logo = document.getElementById('logo');
@@ -189,6 +195,9 @@
 	<div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
 
 	{#if loaded}
+		{#if showCuiOverlay}
+			<CuiOverlay show={showCuiOverlay} onAccept={getStartedHandler} />
+		{/if}
 		<div
 			class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-50 text-black dark:text-white"
 			id="auth-container"
