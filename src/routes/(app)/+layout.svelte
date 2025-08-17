@@ -49,6 +49,7 @@
 	import UpdateInfoToast from '$lib/components/layout/UpdateInfoToast.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import CuiBanner from '$lib/components/common/CuiBanner.svelte';
+	import VideoModal from '$lib/components/VideoModal.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -58,6 +59,21 @@
 
 	let version;
 
+	// Welcome Video Modal
+	let showWelcomeVideoModal = false;
+	const WELCOME_VIDEO_SEEN_KEY = 'welcomeVideoSeen.v1';
+	const WELCOME_YOUTUBE = 'https://youtu.be/xYuH8Ysc0DM?si=OH_g1d5OJ_Ljd1K6';
+
+	function showWelcomeVideo() {
+		const adminDefault = $settings?.showWelcomeVideo === true; // default OFF unless enabled
+		const alreadySeen = localStorage.getItem(WELCOME_VIDEO_SEEN_KEY) === '1';
+		const isAdmin = $user?.role === 'admin';
+
+		if (adminDefault && !alreadySeen && !isAdmin) {
+			showWelcomeVideoModal = true;
+			localStorage.setItem(WELCOME_VIDEO_SEEN_KEY, '1'); // mark immediately
+		}
+	}
 	onMount(async () => {
 		if ($user === undefined || $user === null) {
 			await goto('/auth');
@@ -94,6 +110,8 @@
 
 			if (userSettings) {
 				settings.set(userSettings.ui);
+				await tick();
+				showWelcomeVideo();
 			} else {
 				let localStorageSettings = {} as Parameters<(typeof settings)['set']>[0];
 
@@ -104,6 +122,8 @@
 				}
 
 				settings.set(localStorageSettings);
+				await tick();
+				showWelcomeVideo();
 			}
 
 			models.set(
@@ -261,6 +281,12 @@
 
 <SettingsModal bind:show={$showSettings} />
 <ChangelogModal bind:show={$showChangelog} />
+<VideoModal
+	bind:show={showWelcomeVideoModal}
+	title={$i18n.t('Welcome to Logix')}
+	youtube={WELCOME_YOUTUBE}
+	size="xl"
+/>
 
 {#if version && compareVersion(version.latest, version.current) && ($settings?.showUpdateToast ?? true)}
 	<div class=" absolute bottom-8 right-8 z-50" in:fade={{ duration: 100 }}>

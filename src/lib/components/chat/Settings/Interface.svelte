@@ -9,6 +9,8 @@
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
 	import ManageFloatingActionButtonsModal from './Interface/ManageFloatingActionButtonsModal.svelte';
+	import VideoModal from '$lib/components/VideoModal.svelte';
+	import { t } from 'i18next';
 	const dispatch = createEventDispatcher();
 
 	const i18n = getContext('i18n');
@@ -81,7 +83,7 @@
 	let showUpdateToast = true;
 	let showChangelog = true;
 	let showWelcomeVideo = true;
-
+	
 	let showEmojiInCall = false;
 	let voiceInterruption = false;
 	let hapticFeedback = false;
