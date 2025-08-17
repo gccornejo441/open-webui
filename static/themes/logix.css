@@ -1,23 +1,63 @@
+/* ===================================================================
+   GLOBAL THEME + ACCESSIBILITY CSS
+   - Military palette + USMC logo vars
+   - Sidebar theming (light/dark)
+   - App-wide accessible scrollbars (508/WCAG)
+   - Works across Chrome/Edge/Safari (WebKit) + Firefox
+   =================================================================== */
+
+
 /* ----------  PALETTE & GLOBAL VARS  ---------- */
 :root {
   --black: #000000;
   --white: #ffffff;
 
   /* Military green scale */
-  --military-light-bg: #dce2cf;   /* light desaturated olive */
+  --military-light-bg: #dce2cf;     /* light desaturated olive */
   --military-light-border: #5b5f3c; /* deep olive border */
   --military-light-text: #3e4229;   /* dark olive text */
 
-  --military-dark-bg: #1b1f12;   /* near-black olive */
-  --military-dark-border: #3a3f25; /* muted olive border */
-  --military-dark-text: #aab78a;   /* pale green text */
+  --military-dark-bg: #1b1f12;      /* near-black olive */
+  --military-dark-border: #3a3f25;  /* muted olive border */
+  --military-dark-text: #aab78a;    /* pale green text */
 
   /* Logo */
   --marine-logo-url: url("../USMC-Logo.svg");
 
-  /* NEW: height of your fixed top banner (used to offset sidebar & scrim) */
+  /* Height of fixed top banner (used to offset sidebar & scrim) */
   --banner-h: 1.5rem;
+
+  /* ---------- Scrollbar Vars (Light defaults) ---------- */
+  --scroll-track: var(--military-light-bg);
+  --scroll-thumb: var(--military-light-border);
+  --scroll-thumb-border: var(--white);
+  --scroll-size: 1rem;               /* wide enough for accessibility */
+  --scroll-radius: 9999px;
+  --scroll-thumb-hover: #4b5032;     /* slightly darker olive for hover */
 }
+
+/* Dark mode variable overrides */
+.dark {
+  --scroll-track: var(--military-dark-bg);
+  --scroll-thumb: var(--military-dark-text);
+  --scroll-thumb-border: var(--black);
+  --scroll-thumb-hover: #c2d19b;     /* slightly lighter for hover */
+}
+
+/* Optional: LOGIX theme hook — assign your brand colors here to override */
+.theme-logix {
+  --logix-track: var(--scroll-track);
+  --logix-thumb: var(--scroll-thumb);
+  --logix-thumb-border: var(--scroll-thumb-border);
+  --logix-thumb-hover: var(--scroll-thumb-hover);
+
+  /* Drive scrollbars from LOGIX vars */
+  --scroll-track: var(--logix-track);
+  --scroll-thumb: var(--logix-thumb);
+  --scroll-thumb-border: var(--logix-thumb-border);
+  --scroll-thumb-hover: var(--logix-thumb-hover);
+}
+
 
 /* ----------  SIDEBAR THEMING  ---------- */
 #sidebar {
@@ -30,7 +70,7 @@
   color: var(--sidebar-text-color);
 }
 
-/* Dark mode */
+/* Dark mode sidebar */
 .dark #sidebar {
   --sidebar-bg-color: var(--military-dark-bg);
   --sidebar-border-color: var(--military-dark-border);
@@ -43,7 +83,8 @@
   stroke: var(--sidebar-text-color) !important;
 }
 
-/* ----------  SEARCH INPUTS  ---------- */
+
+/* ----------  SEARCH INPUTS (Sidebar)  ---------- */
 #sidebar input[type="search"],
 #sidebar input.search-input {
   background-color: rgba(255, 255, 255, 0.15);
@@ -53,6 +94,7 @@
   width: 100%;
   font-size: 0.875rem;
 }
+
 #sidebar input[type="search"]::placeholder,
 #sidebar input.search-input::placeholder {
   color: var(--sidebar-text-color);
@@ -65,13 +107,15 @@
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--sidebar-border-color);
 }
+
 .dark #sidebar input[type="search"]::placeholder,
 .dark #sidebar input.search-input::placeholder {
   color: var(--sidebar-text-color);
   opacity: 0.6;
 }
 
-/* ----------  HOVER BEHAVIOR  ---------- */
+
+/* ----------  HOVER BEHAVIOR (Sidebar)  ---------- */
 /* On hover: brighter text (bg handled by Tailwind-neutralizer below) */
 #sidebar a:hover *,
 #sidebar button:hover *,
@@ -92,4 +136,53 @@
 .sidebar {
   background-color: var(--sidebar-bg-color) !important;
   color: var(--sidebar-text-color) !important;
+}
+
+
+/* ============================================================
+   GLOBAL ACCESSIBLE SCROLLBARS (508 / WCAG COMPLIANT)
+   - Overrides all app scrollbar styles
+   - Uses military palette + theme-logix hook
+   - Works across Chrome/Edge/Safari (WebKit) + Firefox
+   ============================================================ */
+
+/* ---------- FIREFOX ---------- */
+* {
+  scrollbar-width: auto !important; /* avoid too-thin; keep grab-able */
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track) !important; /* thumb | track */
+}
+
+/* ---------- WEBKIT (Chrome/Edge/Safari) ---------- */
+*::-webkit-scrollbar {
+  width: var(--scroll-size) !important;
+  height: var(--scroll-size) !important;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--scroll-track) !important;
+  border-radius: var(--scroll-radius) !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb) !important;
+  border: 2px solid var(--scroll-thumb-border) !important;
+  border-radius: var(--scroll-radius) !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scroll-thumb-hover) !important;
+}
+
+/* ---------- HIGH CONTRAST / FORCED-COLORS ---------- */
+@media (forced-colors: active) {
+  * {
+    scrollbar-color: ButtonText ButtonFace !important;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: ButtonText !important;
+    border-color: ButtonFace !important;
+  }
+  *::-webkit-scrollbar-track {
+    background-color: ButtonFace !important;
+  }
 }

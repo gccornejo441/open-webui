@@ -80,6 +80,7 @@
 	// Admin - Show Update Available Toast
 	let showUpdateToast = true;
 	let showChangelog = true;
+	let showWelcomeVideo = true;
 
 	let showEmojiInCall = false;
 	let voiceInterruption = false;
@@ -442,6 +443,25 @@
 								bind:state={showChangelog}
 								on:change={() => {
 									saveSettings({ showChangelog });
+								}}
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<div class=" py-0.5 flex w-full justify-between">
+						<div id="welcome-video-label" class=" self-center text-xs">
+							{$i18n.t('Show welcome video for new users')}
+						</div>
+
+						<div class="flex items-center gap-2 p-1">
+							<Switch
+								ariaLabelledbyId="welcome-video-label"
+								tooltip={true}
+								bind:state={showWelcomeVideo}
+								on:change={() => {
+									saveSettings({ showWelcomeVideo });
 								}}
 							/>
 						</div>
