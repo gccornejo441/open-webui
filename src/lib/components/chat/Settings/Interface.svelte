@@ -83,7 +83,7 @@
 	let showUpdateToast = true;
 	let showChangelog = true;
 	let showWelcomeVideo = true;
-	
+
 	let showEmojiInCall = false;
 	let voiceInterruption = false;
 	let hapticFeedback = false;
@@ -466,6 +466,17 @@
 									saveSettings({ showWelcomeVideo });
 								}}
 							/>
+
+							<button
+								type="button"
+								class="px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+								aria-label={$i18n.t('Preview welcome video')}
+								on:click={() => {
+									window.dispatchEvent(new CustomEvent('preview-welcome-video'));
+								}}
+							>
+								{$i18n.t('Preview')}
+							</button>
 						</div>
 					</div>
 				</div>

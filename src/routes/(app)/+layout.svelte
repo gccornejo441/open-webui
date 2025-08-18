@@ -61,6 +61,7 @@
 
 	// Welcome Video Modal
 	let showWelcomeVideoModal = false;
+	let offPreview: (() => void) | null = null;
 	const WELCOME_VIDEO_SEEN_KEY = 'welcomeVideoSeen.v1';
 	const WELCOME_YOUTUBE = 'https://youtu.be/xYuH8Ysc0DM?si=OH_g1d5OJ_Ljd1K6';
 
@@ -125,6 +126,11 @@
 				await tick();
 				showWelcomeVideo();
 			}
+
+			const previewHandler = () => {
+				showWelcomeVideoModal = true;
+			};
+			window.addEventListener('preview-welcome-video', previewHandler);
 
 			models.set(
 				await getModels(
@@ -264,6 +270,8 @@
 				}
 			}
 			await tick();
+
+			
 		}
 
 		loaded = true;
